@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chatter — Real-time Chat</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <!-- Ambient background orbs -->
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="bg-orb orb-3"></div>
+
+  <div class="app-shell">
+    <!-- ── Sidebar ─────────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">chatter</span>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Your name</p>
+        <div class="username-wrapper">
+          <input
+            id="usernameInput"
+            type="text"
+            maxlength="24"
+            placeholder="Loading…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="saveUsernameBtn" title="Save name">✓</button>
+        </div>
+        <p class="sidebar-hint">Click ✓ to change your display name</p>
+      </div>
+
+      <div class="sidebar-section">
+        <p class="sidebar-label">Global room</p>
+        <div class="room-pill">
+          <span class="online-dot"></span>
+          <span id="roomName"># general</span>
+        </div>
+        <p class="online-count"><span id="userCount">1</span> online</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <p>Open source · Free forever</p>
+      </div>
+    </aside>
+
+    <!-- ── Main Chat ───────────────────────────────────────────── -->
+    <main class="chat-area">
+      <!-- Header -->
+      <header class="chat-header">
+        <div class="header-left">
+          <button class="menu-toggle" id="menuToggle" aria-label="Menu">☰</button>
+          <span class="header-room"># general</span>
+        </div>
+        <div class="header-right">
+          <span class="header-badge" id="headerCount">
+            <span class="online-dot"></span>
+            <span id="headerUserCount">1</span> online
+          </span>
+        </div>
+      </header>
+
+      <!-- Messages -->
+      <div class="messages-wrap" id="messagesWrap">
+        <div id="messagesList" class="messages-list">
+          <div class="welcome-banner">
+            <div class="welcome-icon">◈</div>
+            <h2>Welcome to Chatter</h2>
+            <p>A single global room. No accounts. Just talk.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Typing indicator -->
+      <div class="typing-area" id="typingArea"></div>
+
+      <!-- Input bar -->
+      <div class="input-bar">
+        <div class="input-inner">
+          <textarea
+            id="messageInput"
+            placeholder="Send a message…"
+            rows="1"
+            maxlength="1000"
+            autocomplete="off"
+            spellcheck="true"
+          ></textarea>
+          <button id="sendBtn" class="send-btn" aria-label="Send">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="22" y1="2" x2="11" y2="13"></line>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+            </svg>
+          </button>
+        </div>
+        <p class="char-count" id="charCount">0 / 1000</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Mobile sidebar overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="js/chat.js"></script>
+</body>
+</html>
