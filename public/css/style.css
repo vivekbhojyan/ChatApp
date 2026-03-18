@@ -58,7 +58,7 @@ html, body {
 }
 .orb-1 {
   width: 500px; height: 500px;
-  background: radial-gradient(circle, #3b4db5 0%, transparent 70%);
+  background: radial-gradient(circle, #8291e4 0%, transparent 70%);
   top: -150px; left: -100px;
 }
 .orb-2 {
@@ -85,7 +85,7 @@ html, body {
 .sidebar {
   width: var(--sidebar-w);
   flex-shrink: 0;
-  background: rgba(19,22,30,0.8);
+  background: rgba(215, 255, 158, 0.8);
   backdrop-filter: blur(20px);
   border-right: 1px solid var(--border);
   display: flex;

@@ -30,7 +30,7 @@ const sidebar       = document.querySelector(".sidebar");
 const AVATAR_COLORS = [
   ["#3b4db5","#6c8cff"], ["#6c2ea8","#a78bfa"], ["#0e7abd","#38bdf8"],
   ["#0d7a5e","#34d399"], ["#7a3d0d","#fb923c"], ["#7a0d2e","#f87171"],
-  ["#4a7a0d","#a3e635"], ["#0d4a7a","#60a5fa"],
+  ["#9bf625","#ddf1bb"], ["#0d4a7a","#60a5fa"],
 ];
 
 function avatarStyle(username) {

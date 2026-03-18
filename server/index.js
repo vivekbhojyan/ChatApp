@@ -25,10 +25,7 @@ const supabase = createClient(
 
 // ─── Username Generator ───────────────────────────────────────────────────────
 const adjectives = [
-  "Swift", "Bold", "Calm", "Deft", "Epic", "Fierce", "Glow", "Happy",
-  "Idle", "Jolly", "Kind", "Lush", "Misty", "Noble", "Odd", "Prime",
-  "Quick", "Rare", "Sly", "Teal", "Ultra", "Vivid", "Warm", "Xenon",
-  "Young", "Zesty", "Amber", "Brave", "Crisp", "Dusty",
+  "ABES","ABES",
 ];
 const nouns = [
   "Panda", "Comet", "Pixel", "Storm", "Ember", "Frost", "Globe", "Haven",
