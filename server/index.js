@@ -6,7 +6,6 @@ const cors = require("cors");
 const path = require("path");
 const { createClient } = require("@supabase/supabase-js");
 
-// ─── App Setup ────────────────────────────────────────────────────────────────
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -17,13 +16,11 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../public")));
 
-// ─── Supabase Client ──────────────────────────────────────────────────────────
 const supabase = createClient(
   process.env.SUPABASE_URL,
   process.env.SUPABASE_ANON_KEY
 );
 
-// ─── Username Generator ───────────────────────────────────────────────────────
 const adjectives = [
   "ABES","ABES",
 ];
@@ -41,7 +38,6 @@ function randomUsername() {
   return `${adj}${noun}${num}`;
 }
 
-// ─── DB Helpers ───────────────────────────────────────────────────────────────
 async function fetchRecentMessages(limit = 50) {
   try {
     const { data, error } = await supabase
@@ -74,7 +70,6 @@ async function saveMessage({ username, message, user_id }) {
   }
 }
 
-// ─── REST Endpoints ───────────────────────────────────────────────────────────
 app.get("/api/messages", async (req, res) => {
   const messages = await fetchRecentMessages();
   res.json({ messages });
@@ -84,7 +79,6 @@ app.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// ─── Socket.IO Logic ──────────────────────────────────────────────────────────
 let onlineUsers = {};
 
 io.on("connection", async (socket) => {
@@ -94,23 +88,18 @@ io.on("connection", async (socket) => {
 
   console.log(`✅ ${username} connected (${userId})`);
 
-  // Send assigned username to the connecting client
   socket.emit("assign_username", { username, userId });
 
-  // Send online count to everyone
   io.emit("user_count", { count: Object.keys(onlineUsers).length });
 
-  // Send recent messages to the newly joined user
   const history = await fetchRecentMessages(50);
   socket.emit("message_history", history);
 
-  // Notify others about new user
   socket.broadcast.emit("system_message", {
     text: `${username} joined the chat`,
     timestamp: new Date().toISOString(),
   });
 
-  // ── Receive a chat message ──────────────────────────────────────────────────
   socket.on("send_message", async ({ message, customUsername }) => {
     const finalUsername = customUsername?.trim() || username;
     if (!message?.trim()) return;
@@ -134,13 +123,11 @@ io.on("connection", async (socket) => {
     io.emit("new_message", payload);
   });
 
-  // ── Typing indicator ────────────────────────────────────────────────────────
   socket.on("typing", ({ isTyping, customUsername }) => {
     const name = customUsername?.trim() || username;
     socket.broadcast.emit("typing_update", { username: name, isTyping });
   });
 
-  // ── Disconnect ──────────────────────────────────────────────────────────────
   socket.on("disconnect", () => {
     console.log(`❌ ${username} disconnected`);
     delete onlineUsers[userId];
@@ -152,7 +139,6 @@ io.on("connection", async (socket) => {
   });
 });
 
-// ─── Start Server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`🚀 Chat server running on http://localhost:${PORT}`);
